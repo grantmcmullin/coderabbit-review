@@ -15,9 +15,9 @@ class CalculationFactory extends Factory
         return [
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
-            'first_number' => $this->faker->randomFloat(),
-            'second_number' => $this->faker->word(),
-            'operator' => $this->faker->word(),
+            'first_number' => $this->faker->randomNumber(),
+            'second_number' => $this->faker->randomNumber(),
+            'operator' => $this->faker->randomElement(['+', '-', '*', '/'])
         ];
     }
 }

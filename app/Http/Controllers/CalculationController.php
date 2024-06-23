@@ -32,13 +32,14 @@ class CalculationController extends Controller
     public function update(CalculationRequest $request, Calculation $calculation)
     {
         $this->authorize('update', $calculation);
-        return new CalculationResource($calculation->update($request->validated()));
+        $calculation->update($request->validated());
+        return new CalculationResource($calculation->fresh());
     }
 
     public function destroy(Calculation $calculation)
     {
         $this->authorize('delete', $calculation);
         $calculation->delete();
-        return response()->json();
+        return response()->json(null, 204);
     }
 }

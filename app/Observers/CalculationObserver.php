@@ -2,13 +2,15 @@
 
 namespace App\Observers;
 
-use App\Http\Requests\CalculationRequest;
+use App\Actions\CalculateResult;
 use App\Models\Calculation;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class CalculationObserver
 {
+    use RefreshDatabase;
     public function saving(Calculation $calculation): void
     {
-        app(CalculationRequest::class)->execute($calculation);
+        $calculation->result = app(CalculateResult::class)->execute($calculation);
     }
 }

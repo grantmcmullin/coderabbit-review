@@ -2,6 +2,9 @@
 
 namespace App\Actions;
 
+use App\Exceptions\InvalidFirstNumberException;
+use App\Exceptions\InvalidOperatorException;
+use App\Exceptions\InvalidSecondNumberException;
 use App\Models\Calculation;
 use DivisionByZeroError;
 
@@ -10,15 +13,15 @@ class CalculateResult
     public function execute(Calculation $calculation): ?float
     {
         if (!is_numeric($calculation->first_number)) {
-            throw new \Exception("First number must be numeric");
+            throw new InvalidFirstNumberException();
         };
 
         if (!is_numeric($calculation->second_number)) {
-            throw new \Exception("Second number must be numeric");
+            throw new InvalidSecondNumberException();
         };
 
         if (!is_string($calculation->operator)) {
-            throw new \Exception("Operator must be a string");
+            throw new InvalidOperatorException();
         };
 
         return $this->calculate($calculation->first_number, $calculation->second_number, $calculation->operator);
@@ -36,7 +39,7 @@ class CalculateResult
             case '/':
                 return $second_number != 0 ? $first_number / $second_number : throw new DivisionByZeroError();
             default:
-                throw new \Exception("Invalid operator");
+                throw new InvalidOperatorException("Invalid operator");
         }
     }
 }
