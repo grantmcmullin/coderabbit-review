@@ -10,8 +10,8 @@ class CalculationRequest extends FormRequest
     {
         return [
             'first_number' => ['required', 'numeric'],
-            'second_number' => ['required'],
-            'operator' => ['required'],
+            'second_number' => ['required', 'numeric'],
+            'operator' => ['required', 'string', 'in:+,-,*,/'],
         ];
     }
 
