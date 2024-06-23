@@ -10,9 +10,9 @@ return new class extends Migration {
         Schema::create('calculations', function (Blueprint $table) {
             $table->id();
             $table->float('first_number');
-            $table->string('second_number');
+            $table->float('second_number');
             $table->string('operator');
-            $table->string('result');
+            $table->float('result')->nullable();
             $table->timestamps();
         });
     }
