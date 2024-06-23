@@ -14,45 +14,31 @@ class CalculationController extends Controller
     public function index()
     {
         $this->authorize('viewAny', Calculation::class);
-
         return CalculationResource::collection(Calculation::all());
     }
 
     public function store(CalculationRequest $request)
     {
         $this->authorize('create', Calculation::class);
-
-        $calculation = Calculation::create($request->validated());
-        $calculation->result = $calculation->calculate();
-        $calculation->save();
-
-        return new CalculationResource($calculation);
+        return new CalculationResource(Calculation::create($request->validated()));
     }
 
     public function show(Calculation $calculation)
     {
         $this->authorize('view', $calculation);
-
         return new CalculationResource($calculation);
     }
 
     public function update(CalculationRequest $request, Calculation $calculation)
     {
         $this->authorize('update', $calculation);
-
-        $calculation->update($request->validated());
-        $calculation->result = $calculation->calculate();
-        $calculation->save();
-
-        return new CalculationResource($calculation);
+        return new CalculationResource($calculation->update($request->validated()));
     }
 
     public function destroy(Calculation $calculation)
     {
         $this->authorize('delete', $calculation);
-
         $calculation->delete();
-
         return response()->json();
     }
 }
