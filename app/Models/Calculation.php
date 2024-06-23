@@ -14,4 +14,19 @@ class Calculation extends Model
         'second_number',
         'operator',
     ];
+
+    public function calculate() {
+        switch ($this->operator) {
+            case '+':
+                return $this->first_number + $this->second_number;
+            case '-':
+                return $this->first_number - $this->second_number;
+            case '*':
+                return $this->first_number * $this->second_number;
+            case '/':
+                return $this->first_number / $this->second_number;
+            default:
+                throw new \Exception('Invalid operator');
+        }
+    }
 }

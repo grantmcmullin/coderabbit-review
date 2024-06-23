@@ -22,7 +22,11 @@ class CalculationController extends Controller
     {
         $this->authorize('create', Calculation::class);
 
-        return new CalculationResource(Calculation::create($request->validated()));
+        $calculation = Calculation::create($request->validated());
+        $calculation->result = $calculation->calculate();
+        $calculation->save();
+
+        return new CalculationResource($calculation);
     }
 
     public function show(Calculation $calculation)
@@ -37,6 +41,8 @@ class CalculationController extends Controller
         $this->authorize('update', $calculation);
 
         $calculation->update($request->validated());
+        $calculation->result = $calculation->calculate();
+        $calculation->save();
 
         return new CalculationResource($calculation);
     }
